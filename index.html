@@ -7,11 +7,12 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
   >
 
-  <title>Private Chat</title>
+  <title>Chat</title>
 
+  <!-- ScaleDrone — نفس الموجود في السكربت الأصلي -->
   <script
     type="text/javascript"
     src="https://cdn.scaledrone.com/scaledrone.min.js">
@@ -19,45 +20,24 @@
 
   <style>
 
+    /* =========================================
+       RESET
+    ========================================= */
+
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
-
-    :root {
-
-      --telegram-blue: #229ed9;
-      --telegram-blue-dark: #168ac1;
-
-      --bg: #e7ebee;
-      --chat-bg: #dfe7ed;
-
-      --header: #ffffff;
-      --footer: #ffffff;
-
-      --mine: #effdde;
-      --theirs: #ffffff;
-
-      --text: #17212b;
-      --muted: #7b8791;
-
-      --border: #e2e6e9;
-
-      --shadow:
-        0 2px 12px rgba(0,0,0,.12);
-    }
-
-
-    /* ==============================
-       BODY
-    ============================== */
 
     html,
     body {
-
       width: 100%;
       height: 100%;
-
       margin: 0;
+      padding: 0;
+    }
+
+    body {
 
       font-family:
         -apple-system,
@@ -67,21 +47,17 @@
         Arial,
         sans-serif;
 
+      background: #d7e1e8;
+
       overflow: hidden;
+
+      color: #17212b;
     }
 
 
-    body {
-
-      background: var(--bg);
-
-      color: var(--text);
-    }
-
-
-    /* ==============================
-       التطبيق
-    ============================== */
+    /* =========================================
+       APP
+    ========================================= */
 
     .app {
 
@@ -89,57 +65,55 @@
       height: 100dvh;
 
       display: flex;
-
       justify-content: center;
       align-items: center;
     }
 
 
-    /* ==============================
-       نافذة المحادثة
-    ============================== */
+    /* =========================================
+       CHAT
+    ========================================= */
 
-    .chat {
+    .content {
 
       width: 100%;
-      height: 100%;
+      height: 100dvh;
 
       display: flex;
       flex-direction: column;
 
-      background: var(--chat-bg);
+      position: relative;
 
       overflow: hidden;
+
+      background: #dce6ed;
     }
 
 
     @media (min-width: 700px) {
 
-      .chat {
+      .content {
 
-        width: min(1100px, 100%);
+        width: min(1000px, 100vw);
+
         height: min(850px, 100dvh);
 
         border-radius: 12px;
 
         box-shadow:
           0 10px 40px rgba(0,0,0,.18);
-
-        overflow: hidden;
       }
     }
 
 
-    /* ==============================
+    /* =========================================
        HEADER
-    ============================== */
+    ========================================= */
 
-    .header {
+    .chat-header {
 
       height: 64px;
       min-height: 64px;
-
-      background: var(--header);
 
       display: flex;
       align-items: center;
@@ -147,58 +121,102 @@
       padding:
         7px 12px;
 
+      background: #ffffff;
+
       border-bottom:
-        1px solid var(--border);
+        1px solid #e5e9ec;
 
       box-shadow:
-        0 1px 4px rgba(0,0,0,.08);
+        0 1px 5px rgba(0,0,0,.08);
 
       z-index: 10;
     }
 
 
-    .header-avatar {
+    /* زر الرجوع */
 
-      width: 46px;
-      height: 46px;
+    .chat-header__back {
+
+      width: 42px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 25px;
+
+      color: #229ed9;
+
+      cursor: pointer;
 
       border-radius: 50%;
+
+      transition: .15s;
+    }
+
+    .chat-header__back:hover {
+
+      background: #edf5f9;
+    }
+
+
+    /* =========================================
+       AVATAR
+    ========================================= */
+
+    .chat-header__avatar {
+
+      width: 45px;
+      height: 45px;
+
+      flex-shrink: 0;
+
+      margin-right: 4px;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: white;
+
+      font-size: 22px;
 
       background:
         linear-gradient(
           135deg,
-          #2aa7e8,
+          #2aabee,
           #168ac1
         );
 
-      color: white;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      font-size: 22px;
-
-      margin-left: 10px;
-
-      flex-shrink: 0;
+      box-shadow:
+        0 2px 6px rgba(34,158,217,.25);
     }
 
 
-    .header-info {
+    /* =========================================
+       HEADER INFO
+    ========================================= */
+
+    .chat-header__info {
 
       flex: 1;
 
       min-width: 0;
+
+      margin-right: 10px;
     }
 
 
-    .header-title {
+    .chat-header__title {
 
       font-size: 16px;
 
       font-weight: 700;
+
+      color: #17212b;
 
       white-space: nowrap;
 
@@ -208,55 +226,52 @@
     }
 
 
-    .header-status {
-
-      font-size: 12px;
-
-      color: var(--muted);
+    .chat-header__status {
 
       margin-top: 2px;
 
-      transition: .2s;
+      font-size: 12px;
+
+      color: #8a98a3;
+
+      white-space: nowrap;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
     }
 
 
-    .header-status.online {
+    /* =========================================
+       HEADER ACTIONS
+    ========================================= */
 
-      color: #28a745;
-    }
-
-
-    /* ==============================
-       HEADER BUTTONS
-    ============================== */
-
-    .header-actions {
+    .chat-header__actions {
 
       display: flex;
 
       align-items: center;
 
-      gap: 4px;
+      gap: 2px;
     }
 
 
-    .header-btn {
+    .header-action {
 
       width: 42px;
       height: 42px;
 
-      border: none;
+      border: 0;
 
       background: transparent;
 
       border-radius: 50%;
 
-      font-size: 19px;
+      font-size: 20px;
 
       cursor: pointer;
 
       display: flex;
-
       align-items: center;
       justify-content: center;
 
@@ -264,109 +279,15 @@
     }
 
 
-    .header-btn:hover {
+    .header-action:hover {
 
-      background: #f0f2f4;
+      background: #f0f3f5;
     }
 
 
-    /* ==============================
-       ROOM INFO
-    ============================== */
-
-    .room-info {
-
-      position: absolute;
-
-      top: 72px;
-      left: 50%;
-
-      transform:
-        translateX(-50%)
-        translateY(-10px);
-
-      background: white;
-
-      border-radius: 12px;
-
-      padding: 14px;
-
-      width: min(340px, 90%);
-
-      box-shadow:
-        0 8px 30px rgba(0,0,0,.2);
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transition: .2s;
-
-      z-index: 100;
-    }
-
-
-    .room-info.show {
-
-      opacity: 1;
-
-      pointer-events: auto;
-
-      transform:
-        translateX(-50%)
-        translateY(0);
-    }
-
-
-    .room-info-title {
-
-      font-weight: 700;
-
-      margin-bottom: 10px;
-    }
-
-
-    .room-link {
-
-      background: #f2f4f6;
-
-      border-radius: 8px;
-
-      padding: 10px;
-
-      font-size: 12px;
-
-      direction: ltr;
-
-      word-break: break-all;
-
-      margin-bottom: 10px;
-    }
-
-
-    .copy-room {
-
-      width: 100%;
-
-      border: none;
-
-      background: var(--telegram-blue);
-
-      color: white;
-
-      padding: 10px;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      font-size: 14px;
-    }
-
-
-    /* ==============================
+    /* =========================================
        MESSAGES
-    ============================== */
+    ========================================= */
 
     .messages {
 
@@ -374,122 +295,81 @@
 
       min-height: 0;
 
+      width: 100%;
+
       overflow-y: auto;
+      overflow-x: hidden;
 
       padding:
-        18px 15px 14px;
+        15px 14px 12px;
 
       display: flex;
 
       flex-direction: column;
 
-      background-color: var(--chat-bg);
+      background-color: #dce6ed;
+
+      /*
+        خلفية هادئة تشبه تطبيقات المحادثة
+      */
 
       background-image:
+
         radial-gradient(
-          rgba(90,110,120,.12) 1px,
+          rgba(100,120,135,.11) 1px,
           transparent 1px
         );
 
       background-size: 24px 24px;
 
       scroll-behavior: smooth;
+
+      -webkit-overflow-scrolling: touch;
     }
 
 
-    /* ==============================
-       Welcome
-    ============================== */
+    /* Scrollbar */
 
-    .welcome {
+    .messages::-webkit-scrollbar {
 
-      width: min(430px, 90%);
+      width: 6px;
+    }
 
-      margin: auto;
+    .messages::-webkit-scrollbar-thumb {
 
-      text-align: center;
+      background: rgba(90,110,120,.25);
 
-      background:
-        rgba(255,255,255,.85);
-
-      padding: 18px;
-
-      border-radius: 14px;
-
-      box-shadow:
-        0 2px 8px rgba(0,0,0,.08);
-
-      color: #687782;
+      border-radius: 20px;
     }
 
 
-    .welcome-icon {
-
-      width: 58px;
-      height: 58px;
-
-      margin: 0 auto 10px;
-
-      border-radius: 50%;
-
-      background: var(--telegram-blue);
-
-      color: white;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      font-size: 27px;
-    }
-
-
-    .welcome-title {
-
-      color: var(--text);
-
-      font-weight: 700;
-
-      margin-bottom: 5px;
-    }
-
-
-    .welcome-text {
-
-      font-size: 13px;
-
-      line-height: 1.5;
-    }
-
-
-    /* ==============================
+    /* =========================================
        MESSAGE
-    ============================== */
+    ========================================= */
 
     .message {
-
-      max-width: min(650px, 78%);
 
       display: flex;
 
       flex-direction: column;
 
+      max-width: min(600px, 78%);
+
       margin-bottom: 7px;
 
       animation:
-        messageIn .15s ease-out;
+        messageAppear .16s ease-out;
     }
 
 
-    @keyframes messageIn {
+    @keyframes messageAppear {
 
       from {
 
         opacity: 0;
 
         transform:
-          translateY(6px);
+          translateY(5px);
       }
 
       to {
@@ -502,159 +382,104 @@
     }
 
 
+    /* رسائلي */
+
     .message--mine {
 
-      align-self: flex-start;
+      align-items: flex-end;
 
-      align-items: flex-start;
+      align-self: flex-start;
     }
 
+
+    /* رسائل الطرف الآخر */
 
     .message--theirs {
 
-      align-self: flex-end;
+      align-items: flex-start;
 
-      align-items: flex-end;
+      align-self: flex-end;
     }
 
 
-    .message-name {
+    /* =========================================
+       NAME
+    ========================================= */
+
+    .message__name {
 
       font-size: 11px;
 
       font-weight: 600;
 
-      color: #687782;
+      color: #6e7e88;
 
-      margin:
+      padding:
         0 8px 3px;
+
+      line-height: 1.3;
     }
 
 
-    .message-bubble {
+    /* =========================================
+       BUBBLE
+    ========================================= */
 
-      position: relative;
+    .message__bubble {
 
       padding:
-        8px 11px 7px;
+        8px 12px;
 
-      border-radius: 10px;
+      border-radius: 11px;
 
-      box-shadow:
-        0 1px 2px rgba(0,0,0,.12);
-
-      word-break: break-word;
+      font-size: 15px;
 
       line-height: 1.45;
 
-      font-size: 14.5px;
+      word-break: break-word;
+
+      overflow-wrap: anywhere;
+
+      color: #17212b;
+
+      box-shadow:
+        0 1px 2px rgba(0,0,0,.10);
+
+      transition: .12s;
     }
 
 
-    .message--mine
-    .message-bubble {
-
-      background: var(--mine);
-
-      border-top-left-radius: 3px;
-    }
-
+    /* الطرف الآخر */
 
     .message--theirs
-    .message-bubble {
+    .message__bubble {
 
-      background: var(--theirs);
+      background: #ffffff;
 
       border-top-right-radius: 3px;
     }
 
 
-    .message-meta {
+    /* أنا */
 
-      display: flex;
+    .message--mine
+    .message__bubble {
 
-      justify-content: flex-end;
+      background: #effdde;
 
-      align-items: center;
-
-      gap: 4px;
-
-      font-size: 10px;
-
-      color: #78909c;
-
-      margin-top: 3px;
+      border-top-left-radius: 3px;
     }
 
 
-    .message-check {
-
-      color: #229ed9;
-
-      font-size: 13px;
-    }
-
-
-    /* ==============================
-       SYSTEM MESSAGE
-    ============================== */
-
-    .system-message {
-
-      align-self: center;
-
-      margin:
-        8px auto;
-
-      padding:
-        6px 12px;
-
-      background:
-        rgba(255,255,255,.82);
-
-      color: #65747e;
-
-      border-radius: 10px;
-
-      font-size: 11px;
-
-      box-shadow:
-        0 1px 3px rgba(0,0,0,.08);
-    }
-
-
-    /* ==============================
-       TYPING
-    ============================== */
-
-    .typing {
-
-      min-height: 20px;
-
-      padding:
-        0 18px;
-
-      color: var(--telegram-blue);
-
-      font-size: 11px;
-
-      background: var(--chat-bg);
-    }
-
-
-    .typing.hidden {
-
-      visibility: hidden;
-    }
-
-
-    /* ==============================
+    /* =========================================
        FOOTER
-    ============================== */
+    ========================================= */
 
     .footer {
 
-      min-height: 62px;
+      width: 100%;
+
+      min-height: 64px;
 
       padding:
         7px 9px;
@@ -665,53 +490,81 @@
 
       gap: 6px;
 
-      background: var(--footer);
+      background: #ffffff;
 
       border-top:
-        1px solid var(--border);
+        1px solid #e3e7ea;
 
-      z-index: 10;
+      flex-shrink: 0;
+
+      position: relative;
+
+      z-index: 20;
+
+      padding-bottom:
+        max(7px, env(safe-area-inset-bottom));
     }
 
 
-    /* ==============================
-       Emoji
-    ============================== */
+    /* =========================================
+       EMOJI BUTTON
+    ========================================= */
 
-    .emoji-btn {
+    .emoji-button {
 
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
 
-      border: none;
+      flex-shrink: 0;
 
-      border-radius: 50%;
+      border: 0;
 
       background: transparent;
 
-      font-size: 22px;
+      border-radius: 50%;
+
+      font-size: 23px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
 
       cursor: pointer;
 
-      flex-shrink: 0;
+      user-select: none;
+
+      touch-action: manipulation;
+
+      transition:
+        background .15s,
+        transform .1s;
     }
 
 
-    .emoji-btn:hover {
+    .emoji-button:hover {
 
-      background: #f0f2f4;
+      background: #f0f3f5;
     }
 
 
-    /* ==============================
-       Input
-    ============================== */
+    .emoji-button:active {
 
-    .input-wrap {
+      transform: scale(.90);
+    }
+
+
+    /* =========================================
+       INPUT WRAPPER
+    ========================================= */
+
+    .footer__input-wrap {
 
       flex: 1;
 
       min-width: 0;
+
+      height: 44px;
 
       display: flex;
 
@@ -719,22 +572,26 @@
 
       background: #f1f3f5;
 
-      border-radius: 21px;
+      border-radius: 22px;
 
       padding:
-        0 14px;
+        0 15px;
     }
 
 
-    input {
+    /* =========================================
+       INPUT
+    ========================================= */
+
+    input[type="text"] {
 
       width: 100%;
 
-      height: 42px;
+      height: 44px;
 
-      border: none;
+      border: 0;
 
-      outline: none;
+      outline: 0;
 
       background: transparent;
 
@@ -742,37 +599,43 @@
 
       font-size: 15px;
 
-      color: var(--text);
+      color: #17212b;
+
+      direction: rtl;
     }
 
 
-    input::placeholder {
+    input[type="text"]::placeholder {
 
-      color: #8b98a1;
+      color: #8b98a2;
     }
 
 
-    /* ==============================
-       Send
-    ============================== */
+    /* =========================================
+       SEND BUTTON
+    ========================================= */
 
     .send-btn {
 
-      width: 45px;
-      height: 45px;
+      width: 46px;
+      height: 46px;
 
-      flex-shrink: 0;
+      min-width: 46px;
 
-      border: none;
+      border: 0;
 
       border-radius: 50%;
 
       background:
-        var(--telegram-blue);
+        linear-gradient(
+          135deg,
+          #2aabee,
+          #168ac1
+        );
 
       color: white;
 
-      font-size: 18px;
+      font-size: 19px;
 
       cursor: pointer;
 
@@ -781,14 +644,19 @@
       align-items: center;
       justify-content: center;
 
-      transition: .15s;
+      box-shadow:
+        0 3px 8px rgba(34,158,217,.28);
+
+      transition:
+        transform .12s,
+        box-shadow .12s;
     }
 
 
     .send-btn:hover {
 
-      background:
-        var(--telegram-blue-dark);
+      box-shadow:
+        0 4px 12px rgba(34,158,217,.38);
     }
 
 
@@ -799,180 +667,315 @@
     }
 
 
-    /* ==============================
-       Emoji Picker
-    ============================== */
+    /* =========================================
+       EMOJI PANEL
+    ========================================= */
 
-    .emoji-picker {
+    .emoji-panel {
 
       position: absolute;
 
-      bottom: 70px;
+      bottom: 69px;
 
-      right: 10px;
+      right: 8px;
 
-      width: 280px;
+      width: 300px;
 
-      max-height: 220px;
+      max-width: calc(100vw - 16px);
+
+      max-height: 250px;
 
       overflow-y: auto;
 
-      background: white;
-
-      border-radius: 12px;
-
       padding: 10px;
-
-      box-shadow:
-        0 5px 25px rgba(0,0,0,.2);
 
       display: none;
 
       grid-template-columns:
         repeat(8, 1fr);
 
-      gap: 4px;
+      gap: 3px;
+
+      background: #ffffff;
+
+      border-radius: 13px;
+
+      box-shadow:
+        0 7px 30px rgba(0,0,0,.20);
 
       z-index: 100;
     }
 
 
-    .emoji-picker.show {
+    .emoji-panel.show {
 
       display: grid;
     }
 
 
-    .emoji-item {
+    .emoji-choice {
 
-      border: none;
+      width: 32px;
+      height: 32px;
+
+      border: 0;
 
       background: transparent;
 
+      border-radius: 7px;
+
       font-size: 21px;
 
-      padding: 5px;
-
-      border-radius: 6px;
-
       cursor: pointer;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      transition: .1s;
     }
 
 
-    .emoji-item:hover {
+    .emoji-choice:hover {
 
-      background: #eef1f3;
+      background: #eef2f4;
+
+      transform: scale(1.12);
     }
 
 
-    /* ==============================
-       Mobile
-    ============================== */
+    /* =========================================
+       MOBILE
+    ========================================= */
 
     @media (max-width: 600px) {
 
-      .header {
+      body {
 
-        height: 60px;
-        min-height: 60px;
+        background: #dce6ed;
       }
 
 
-      .header-avatar {
+      .content {
+
+        width: 100vw;
+
+        height: 100dvh;
+
+        border-radius: 0;
+
+        box-shadow: none;
+      }
+
+
+      .chat-header {
+
+        height: 60px;
+
+        min-height: 60px;
+
+        padding:
+          6px 7px;
+      }
+
+
+      .chat-header__back {
+
+        width: 38px;
+        height: 38px;
+      }
+
+
+      .chat-header__avatar {
 
         width: 42px;
         height: 42px;
       }
 
 
-      .header-actions {
+      .chat-header__info {
+
+        margin-right: 7px;
+      }
+
+
+      .chat-header__title {
+
+        font-size: 15px;
+      }
+
+
+      .chat-header__actions {
 
         gap: 0;
+      }
+
+
+      .header-action {
+
+        width: 38px;
+        height: 38px;
+
+        font-size: 18px;
       }
 
 
       .messages {
 
         padding:
-          10px 8px;
+          10px 7px 10px;
       }
 
 
       .message {
 
-        max-width: 85%;
+        max-width: 86%;
+      }
+
+
+      .message__bubble {
+
+        font-size: 15px;
+
+        padding:
+          8px 11px;
       }
 
 
       .footer {
 
+        min-height: 61px;
+
         padding:
-          6px;
+          6px 6px;
       }
 
 
-      .emoji-picker {
+      .emoji-button {
 
-        bottom: 64px;
+        width: 40px;
+        height: 40px;
+      }
 
-        right: 6px;
 
-        width: 280px;
+      .footer__input-wrap {
+
+        height: 43px;
+      }
+
+
+      input[type="text"] {
+
+        height: 43px;
+      }
+
+
+      .send-btn {
+
+        width: 44px;
+        height: 44px;
+
+        min-width: 44px;
+      }
+
+
+      .emoji-panel {
+
+        bottom: 66px;
+
+        right: 5px;
+
+        width: 290px;
       }
     }
 
 
-    /* ==============================
-       Dark mode
-    ============================== */
+    /* =========================================
+       حالة التركيز على الكتابة
+    ========================================= */
 
-    body.dark {
+    .footer__input-wrap:focus-within {
 
-      --bg: #17212b;
+      background: #eef5f8;
 
-      --chat-bg: #0e1621;
-
-      --header: #17212b;
-
-      --footer: #17212b;
-
-      --mine: #2b5278;
-
-      --theirs: #182533;
-
-      --text: #eeeeee;
-
-      --muted: #9aa8b3;
-
-      --border: #263542;
+      box-shadow:
+        inset 0 0 0 1px
+        rgba(34,158,217,.18);
     }
 
 
-    body.dark
-    .input-wrap {
+    /* =========================================
+       تحسين اللمس
+    ========================================= */
 
-      background: #202b36;
+    button {
+
+      font-family: inherit;
     }
 
 
-    body.dark
-    .emoji-picker {
+    /* =========================================
+       عندما يكون الكيبورد مفتوحًا
+    ========================================= */
 
-      background: #17212b;
-    }
+    @media (max-height: 500px) {
+
+      .chat-header {
+
+        height: 52px;
+
+        min-height: 52px;
+      }
 
 
-    body.dark
-    .room-info {
+      .chat-header__avatar {
 
-      background: #17212b;
-    }
+        width: 36px;
+        height: 36px;
+
+        font-size: 18px;
+      }
 
 
-    body.dark
-    .room-link {
+      .messages {
 
-      background: #202b36;
+        padding-top: 6px;
+      }
+
+
+      .footer {
+
+        min-height: 52px;
+      }
+
+
+      .footer__input-wrap {
+
+        height: 38px;
+      }
+
+
+      input[type="text"] {
+
+        height: 38px;
+      }
+
+
+      .send-btn {
+
+        width: 40px;
+        height: 40px;
+
+        min-width: 40px;
+      }
+
+
+      .emoji-button {
+
+        width: 38px;
+        height: 38px;
+      }
     }
 
   </style>
@@ -982,521 +985,456 @@
 
 <body>
 
-<div class="app">
+  <div class="app">
 
-  <main class="chat">
-
-
-    <!-- ==========================
-         HEADER
-    =========================== -->
-
-    <header class="header">
-
-      <div class="header-avatar">
-        💬
-      </div>
+    <div class="content">
 
 
-      <div class="header-info">
+      <!-- =====================================
+           HEADER
+      ====================================== -->
 
-        <div class="header-title">
-          محادثة خاصة
-        </div>
+      <header class="chat-header">
 
         <div
-          class="header-status"
-          id="status">
-          في انتظار المستخدم الآخر...
+          class="chat-header__back"
+          title="رجوع">
+          ‹
         </div>
 
-      </div>
 
-
-      <div class="header-actions">
-
-        <button
-          class="header-btn"
-          id="roomBtn"
-          title="معلومات الغرفة">
-          🔗
-        </button>
-
-        <button
-          class="header-btn"
-          id="themeBtn"
-          title="الوضع الليلي">
-          🌙
-        </button>
-
-        <button
-          class="header-btn"
-          id="moreBtn"
-          title="المزيد">
-          ⋮
-        </button>
-
-      </div>
-
-    </header>
-
-
-    <!-- ==========================
-         ROOM POPUP
-    =========================== -->
-
-    <div
-      class="room-info"
-      id="roomInfo">
-
-      <div class="room-info-title">
-        🔐 غرفة المحادثة
-      </div>
-
-      <div
-        class="room-link"
-        id="roomLink">
-      </div>
-
-      <button
-        class="copy-room"
-        id="copyRoom">
-        📋 نسخ رابط الغرفة
-      </button>
-
-    </div>
-
-
-    <!-- ==========================
-         MESSAGES
-    =========================== -->
-
-    <section
-      class="messages"
-      id="messages">
-
-      <div
-        class="welcome"
-        id="welcome">
-
-        <div class="welcome-icon">
+        <div
+          class="chat-header__avatar">
           💬
         </div>
 
-        <div class="welcome-title">
-          محادثة خاصة
+
+        <div class="chat-header__info">
+
+          <div
+            class="chat-header__title">
+            محادثة خاصة
+          </div>
+
+          <div
+            class="chat-header__status">
+            في انتظار المستخدم الآخر...
+          </div>
+
         </div>
 
-        <div class="welcome-text">
-          شارك رابط هذه الغرفة مع شخص آخر
-          لبدء محادثة مباشرة وآمنة.
+
+        <div class="chat-header__actions">
+
+          <button
+            type="button"
+            class="header-action"
+            title="بحث">
+            🔍
+          </button>
+
+          <button
+            type="button"
+            class="header-action"
+            title="المزيد">
+            ⋮
+          </button>
+
         </div>
 
-      </div>
-
-    </section>
+      </header>
 
 
-    <!-- ==========================
-         TYPING
-    =========================== -->
+      <!-- =====================================
+           MESSAGES
 
-    <div
-      class="typing hidden"
-      id="typing">
-      يكتب الآن...
-    </div>
+           مهم:
+           نفس class الذي يحتاجه script.js
+      ====================================== -->
 
-
-    <!-- ==========================
-         FOOTER
-    =========================== -->
-
-    <form
-      class="footer"
-      id="chatForm">
-
-
-      <button
-        type="button"
-        class="emoji-btn"
-        id="emojiBtn">
-        😊
-      </button>
-
-
-      <div class="input-wrap">
-
-        <input
-          id="messageInput"
-          type="text"
-          autocomplete="off"
-          placeholder="اكتب رسالة...">
+      <div class="messages">
 
       </div>
 
 
-      <button
-        type="submit"
-        class="send-btn"
-        title="إرسال">
-        ➤
-      </button>
+      <!-- =====================================
+           FOOTER
+      ====================================== -->
 
-    </form>
+      <form
+        class="footer"
+        onsubmit="return false;">
 
 
-    <!-- ==========================
-         EMOJI PICKER
-    =========================== -->
+        <!-- زر الإيموجي -->
 
-    <div
-      class="emoji-picker"
-      id="emojiPicker">
+        <button
+          type="button"
+          class="emoji-button"
+          id="emojiButton"
+          aria-label="Emoji">
 
-      <button class="emoji-item">😀</button>
-      <button class="emoji-item">😂</button>
-      <button class="emoji-item">🤣</button>
-      <button class="emoji-item">😊</button>
-      <button class="emoji-item">😍</button>
-      <button class="emoji-item">🥰</button>
-      <button class="emoji-item">😘</button>
-      <button class="emoji-item">😎</button>
+          😊
 
-      <button class="emoji-item">❤️</button>
-      <button class="emoji-item">🧡</button>
-      <button class="emoji-item">💛</button>
-      <button class="emoji-item">💚</button>
-      <button class="emoji-item">💙</button>
-      <button class="emoji-item">💜</button>
-      <button class="emoji-item">🖤</button>
-      <button class="emoji-item">🤍</button>
+        </button>
 
-      <button class="emoji-item">👍</button>
-      <button class="emoji-item">👎</button>
-      <button class="emoji-item">👏</button>
-      <button class="emoji-item">🙏</button>
-      <button class="emoji-item">🔥</button>
-      <button class="emoji-item">🎉</button>
-      <button class="emoji-item">💯</button>
-      <button class="emoji-item">✨</button>
 
-      <button class="emoji-item">😂</button>
-      <button class="emoji-item">😭</button>
-      <button class="emoji-item">😡</button>
-      <button class="emoji-item">🤔</button>
-      <button class="emoji-item">😴</button>
-      <button class="emoji-item">🤩</button>
-      <button class="emoji-item">😇</button>
-      <button class="emoji-item">🥳</button>
+        <!-- input -->
+
+        <div class="footer__input-wrap">
+
+          <input
+            type="text"
+            autocomplete="off"
+            placeholder="اكتب رسالة..."
+          >
+
+        </div>
+
+
+        <!-- send -->
+
+        <button
+          type="submit"
+          class="send-btn"
+          title="إرسال">
+
+          ➤
+
+        </button>
+
+
+        <!-- =====================================
+             Emoji Panel
+        ====================================== -->
+
+        <div
+          class="emoji-panel"
+          id="emojiPanel">
+
+
+          <button type="button" class="emoji-choice">😀</button>
+          <button type="button" class="emoji-choice">😃</button>
+          <button type="button" class="emoji-choice">😄</button>
+          <button type="button" class="emoji-choice">😁</button>
+          <button type="button" class="emoji-choice">😂</button>
+          <button type="button" class="emoji-choice">🤣</button>
+          <button type="button" class="emoji-choice">😊</button>
+          <button type="button" class="emoji-choice">😍</button>
+
+          <button type="button" class="emoji-choice">🥰</button>
+          <button type="button" class="emoji-choice">😘</button>
+          <button type="button" class="emoji-choice">😎</button>
+          <button type="button" class="emoji-choice">🤩</button>
+          <button type="button" class="emoji-choice">🥳</button>
+          <button type="button" class="emoji-choice">😇</button>
+          <button type="button" class="emoji-choice">🤔</button>
+          <button type="button" class="emoji-choice">😴</button>
+
+          <button type="button" class="emoji-choice">😭</button>
+          <button type="button" class="emoji-choice">😢</button>
+          <button type="button" class="emoji-choice">😡</button>
+          <button type="button" class="emoji-choice">😱</button>
+          <button type="button" class="emoji-choice">🙄</button>
+          <button type="button" class="emoji-choice">😏</button>
+          <button type="button" class="emoji-choice">🤗</button>
+          <button type="button" class="emoji-choice">🤭</button>
+
+          <button type="button" class="emoji-choice">❤️</button>
+          <button type="button" class="emoji-choice">🧡</button>
+          <button type="button" class="emoji-choice">💛</button>
+          <button type="button" class="emoji-choice">💚</button>
+          <button type="button" class="emoji-choice">💙</button>
+          <button type="button" class="emoji-choice">💜</button>
+          <button type="button" class="emoji-choice">🖤</button>
+          <button type="button" class="emoji-choice">🤍</button>
+
+          <button type="button" class="emoji-choice">👍</button>
+          <button type="button" class="emoji-choice">👎</button>
+          <button type="button" class="emoji-choice">👏</button>
+          <button type="button" class="emoji-choice">🙏</button>
+          <button type="button" class="emoji-choice">🔥</button>
+          <button type="button" class="emoji-choice">💯</button>
+          <button type="button" class="emoji-choice">✨</button>
+          <button type="button" class="emoji-choice">🎉</button>
+
+        </div>
+
+      </form>
 
     </div>
 
-  </main>
-
-</div>
+  </div>
 
 
-<!--
-=================================================
-مهم:
-نظام الغرفة لا يزال موجودًا في script.js
-=================================================
--->
+  <!-- =====================================
+       TEMPLATE
 
-<script src="script.js"></script>
+       مهم جدًا:
+       مطابق تمامًا لـ script.js الأصلي
+  ====================================== -->
 
+  <template data-template="message">
 
-<script>
+    <div class="message">
 
-  /* =========================================
-     وظائف الواجهة
-  ========================================= */
+      <div class="message__name"></div>
 
+      <div class="message__bubble"></div>
 
-  const messageInput =
-    document.getElementById('messageInput');
+    </div>
 
-
-  const messages =
-    document.getElementById('messages');
+  </template>
 
 
-  const emojiBtn =
-    document.getElementById('emojiBtn');
+  <!-- =====================================
+       SCRIPT الأصلي
+  ====================================== -->
+
+  <script src="script.js"></script>
 
 
-  const emojiPicker =
-    document.getElementById('emojiPicker');
+  <!-- =====================================
+       وظائف الواجهة فقط
+       لا علاقة لها بـ WebRTC
+  ====================================== -->
 
+  <script>
 
-  const roomBtn =
-    document.getElementById('roomBtn');
+    const emojiButton =
+      document.getElementById('emojiButton');
 
+    const emojiPanel =
+      document.getElementById('emojiPanel');
 
-  const roomInfo =
-    document.getElementById('roomInfo');
-
-
-  const copyRoom =
-    document.getElementById('copyRoom');
-
-
-  const roomLink =
-    document.getElementById('roomLink');
-
-
-  const themeBtn =
-    document.getElementById('themeBtn');
-
-
-  const welcome =
-    document.getElementById('welcome');
-
-
-  /* =========================================
-     رابط الغرفة
-  ========================================= */
-
-  roomLink.innerText =
-    location.href;
-
-
-  roomBtn.addEventListener(
-    'click',
-    event => {
-
-      event.stopPropagation();
-
-      roomInfo.classList.toggle(
-        'show'
+    const messageInput =
+      document.querySelector(
+        'input[type="text"]'
       );
 
-    }
-  );
+
+    /* =====================================
+       الضغطة العادية
+       تضع 😊 في الرسالة
+    ====================================== */
+
+    let longPress = false;
+
+    let pressTimer = null;
 
 
-  copyRoom.addEventListener(
-    'click',
-    async () => {
+    emojiButton.addEventListener(
+      'click',
+      function () {
 
-      try {
+        /*
+          إذا كانت ضغطة مطولة،
+          لا ننفذ الضغطة العادية.
+        */
 
-        await navigator.clipboard.writeText(
-          location.href
-        );
+        if (longPress) {
 
-        copyRoom.innerText =
-          '✅ تم نسخ الرابط';
+          longPress = false;
 
-        setTimeout(() => {
-
-          copyRoom.innerText =
-            '📋 نسخ رابط الغرفة';
-
-        }, 1500);
-
-      }
-
-      catch {
-
-        alert(
-          'انسخ الرابط من أعلى المتصفح'
-        );
-
-      }
-
-    }
-  );
+          return;
+        }
 
 
-  /* =========================================
-     إغلاق popup
-  ========================================= */
+        messageInput.value +=
+          '😊';
 
-  document.addEventListener(
-    'click',
-    event => {
-
-      if (
-        !roomInfo.contains(event.target) &&
-        event.target !== roomBtn
-      ) {
-
-        roomInfo.classList.remove(
-          'show'
-        );
+        messageInput.focus();
 
       }
+    );
 
-      if (
-        !emojiPicker.contains(event.target) &&
-        event.target !== emojiBtn
-      ) {
 
-        emojiPicker.classList.remove(
-          'show'
+    /* =====================================
+       بداية الضغط
+    ====================================== */
+
+    function startLongPress() {
+
+      longPress = false;
+
+
+      pressTimer =
+        setTimeout(
+          function () {
+
+            longPress = true;
+
+            emojiPanel.classList.toggle(
+              'show'
+            );
+
+          },
+          500
+        );
+    }
+
+
+    /* =====================================
+       إلغاء الضغط
+    ====================================== */
+
+    function cancelLongPress() {
+
+      if (pressTimer) {
+
+        clearTimeout(
+          pressTimer
         );
 
+        pressTimer = null;
       }
-
     }
-  );
 
 
-  /* =========================================
-     Emoji
-  ========================================= */
-
-  emojiBtn.addEventListener(
-    'click',
-    event => {
-
-      event.stopPropagation();
-
-      emojiPicker.classList.toggle(
-        'show'
-      );
-
-    }
-  );
+    emojiButton.addEventListener(
+      'mousedown',
+      startLongPress
+    );
 
 
-  document
-    .querySelectorAll('.emoji-item')
-    .forEach(button => {
+    emojiButton.addEventListener(
+      'mouseup',
+      cancelLongPress
+    );
 
-      button.addEventListener(
-        'click',
-        () => {
 
-          messageInput.value +=
-            button.innerText;
+    emojiButton.addEventListener(
+      'mouseleave',
+      cancelLongPress
+    );
 
-          messageInput.focus();
 
-          emojiPicker.classList.remove(
-            'show'
+    emojiButton.addEventListener(
+      'touchstart',
+      startLongPress,
+      { passive: true }
+    );
+
+
+    emojiButton.addEventListener(
+      'touchend',
+      cancelLongPress
+    );
+
+
+    /* =====================================
+       اختيار Emoji
+    ====================================== */
+
+    document
+      .querySelectorAll('.emoji-choice')
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            'click',
+            function () {
+
+              messageInput.value +=
+                this.innerText;
+
+              messageInput.focus();
+
+              emojiPanel.classList.remove(
+                'show'
+              );
+
+            }
           );
 
         }
       );
 
-    });
 
+    /* =====================================
+       الضغط خارج لوحة الإيموجي
+    ====================================== */
 
-  /* =========================================
-     Dark mode
-  ========================================= */
+    document.addEventListener(
+      'click',
+      function (event) {
 
-  const savedTheme =
-    localStorage.getItem(
-      'chat_theme'
-    );
+        if (
+          !emojiPanel.contains(
+            event.target
+          ) &&
+          event.target !== emojiButton
+        ) {
 
+          emojiPanel.classList.remove(
+            'show'
+          );
 
-  if (savedTheme === 'dark') {
-
-    document.body.classList.add(
-      'dark'
-    );
-
-    themeBtn.innerText = '☀️';
-  }
-
-
-  themeBtn.addEventListener(
-    'click',
-    () => {
-
-      document.body.classList.toggle(
-        'dark'
-      );
-
-
-      const dark =
-        document.body.classList.contains(
-          'dark'
-        );
-
-
-      localStorage.setItem(
-        'chat_theme',
-        dark ? 'dark' : 'light'
-      );
-
-
-      themeBtn.innerText =
-        dark ? '☀️' : '🌙';
-
-    }
-  );
-
-
-  /* =========================================
-     إخفاء رسالة الترحيب عند أول رسالة
-  ========================================= */
-
-  window.hideWelcome =
-    function() {
-
-      if (welcome) {
-
-        welcome.style.display =
-          'none';
+        }
 
       }
-
-    };
-
-
-  /* =========================================
-     Scroll
-  ========================================= */
-
-  window.scrollChatToBottom =
-    function() {
-
-      messages.scrollTop =
-        messages.scrollHeight;
-
-    };
+    );
 
 
-  /* =========================================
-     الكيبورد
-  ========================================= */
+    /* =====================================
+       Scroll عند فتح الكيبورد
+    ====================================== */
 
-  messageInput.addEventListener(
-    'focus',
-    () => {
-
-      setTimeout(
-        scrollChatToBottom,
-        150
-      );
-
-    }
-  );
-
-
-  if (window.visualViewport) {
-
-    window.visualViewport.addEventListener(
-      'resize',
-      () => {
+    messageInput.addEventListener(
+      'focus',
+      function () {
 
         setTimeout(
-          scrollChatToBottom,
-          100
+          function () {
+
+            const messages =
+              document.querySelector(
+                '.messages'
+              );
+
+            messages.scrollTop =
+              messages.scrollHeight;
+
+          },
+          150
         );
 
       }
     );
 
-  }
 
-</script>
+    /* =====================================
+       عند تغيير حجم الشاشة
+    ====================================== */
+
+    if (window.visualViewport) {
+
+      window.visualViewport.addEventListener(
+        'resize',
+        function () {
+
+          setTimeout(
+            function () {
+
+              const messages =
+                document.querySelector(
+                  '.messages'
+                );
+
+              messages.scrollTop =
+                messages.scrollHeight;
+
+            },
+            100
+          );
+
+        }
+      );
+
+    }
+
+  </script>
 
 </body>
+
 </html>
