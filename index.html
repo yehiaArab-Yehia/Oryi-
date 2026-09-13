@@ -1,64 +1,27 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
+  <script src="https://cdn.scaledrone.com/scaledrone.min.js"></script>
 
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
-
-  <title>Private Chat</title>
-
-  <script
-    type="text/javascript"
-    src="https://cdn.scaledrone.com/scaledrone.min.js">
-  </script>
+  <title>محادثة خاصة</title>
 
   <style>
-
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
-
-    :root {
-
-      --telegram-blue: #229ed9;
-      --telegram-blue-dark: #168ac1;
-
-      --bg: #e7ebee;
-      --chat-bg: #dfe7ed;
-
-      --header: #ffffff;
-      --footer: #ffffff;
-
-      --mine: #effdde;
-      --theirs: #ffffff;
-
-      --text: #17212b;
-      --muted: #7b8791;
-
-      --border: #e2e6e9;
-
-      --shadow:
-        0 2px 12px rgba(0,0,0,.12);
-    }
-
-
-    /* ==============================
-       BODY
-    ============================== */
 
     html,
     body {
-
       width: 100%;
       height: 100%;
-
       margin: 0;
+    }
 
+    body {
       font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -67,674 +30,454 @@
         Arial,
         sans-serif;
 
+      background: #d9e3e9;
+      color: #17212b;
       overflow: hidden;
     }
 
-
-    body {
-
-      background: var(--bg);
-
-      color: var(--text);
-    }
-
-
-    /* ==============================
-       التطبيق
-    ============================== */
-
-    .app {
-
+    .content {
       width: 100%;
       height: 100dvh;
 
       display: flex;
-
-      justify-content: center;
-      align-items: center;
-    }
-
-
-    /* ==============================
-       نافذة المحادثة
-    ============================== */
-
-    .chat {
-
-      width: 100%;
-      height: 100%;
-
-      display: flex;
       flex-direction: column;
 
-      background: var(--chat-bg);
-
+      position: relative;
       overflow: hidden;
+
+      background: #dce7ee;
     }
 
-
     @media (min-width: 700px) {
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-      .chat {
+      .content {
+        width: min(1050px, 96vw);
+        height: min(850px, 94vh);
 
-        width: min(1100px, 100%);
-        height: min(850px, 100dvh);
-
-        border-radius: 12px;
+        border-radius: 15px;
 
         box-shadow:
-          0 10px 40px rgba(0,0,0,.18);
+          0 15px 50px rgba(0, 0, 0, .20);
 
         overflow: hidden;
       }
     }
 
-
-    /* ==============================
+    /* =========================
        HEADER
-    ============================== */
+    ========================= */
 
-    .header {
-
+    .chat-header {
       height: 64px;
       min-height: 64px;
-
-      background: var(--header);
 
       display: flex;
       align-items: center;
 
-      padding:
-        7px 12px;
+      padding: 7px 10px;
 
-      border-bottom:
-        1px solid var(--border);
+      background: #ffffff;
+
+      border-bottom: 1px solid #e5e9ec;
 
       box-shadow:
-        0 1px 4px rgba(0,0,0,.08);
+        0 1px 6px rgba(0, 0, 0, .08);
 
-      z-index: 10;
+      z-index: 20;
     }
 
-
-    .header-avatar {
-
+    .avatar {
       width: 46px;
       height: 46px;
+      min-width: 46px;
 
       border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin-left: 10px;
+
+      font-size: 23px;
+
+      color: white;
 
       background:
         linear-gradient(
           135deg,
-          #2aa7e8,
+          #35b9ed,
           #168ac1
         );
 
-      color: white;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      font-size: 22px;
-
-      margin-left: 10px;
-
-      flex-shrink: 0;
+      box-shadow:
+        0 3px 8px rgba(34,158,217,.25);
     }
 
-
-    .header-info {
-
+    .head-info {
       flex: 1;
-
       min-width: 0;
     }
 
-
-    .header-title {
-
+    .title {
       font-size: 16px;
-
       font-weight: 700;
 
       white-space: nowrap;
-
       overflow: hidden;
-
       text-overflow: ellipsis;
     }
 
-
-    .header-status {
-
+    .status {
       font-size: 12px;
-
-      color: var(--muted);
+      color: #83919b;
 
       margin-top: 2px;
-
-      transition: .2s;
     }
 
-
-    .header-status.online {
-
-      color: #28a745;
-    }
-
-
-    /* ==============================
-       HEADER BUTTONS
-    ============================== */
-
-    .header-actions {
-
+    .head-actions {
       display: flex;
-
       align-items: center;
-
-      gap: 4px;
+      gap: 2px;
     }
 
-
-    .header-btn {
-
+    .head-btn {
       width: 42px;
       height: 42px;
 
-      border: none;
-
+      border: 0;
       background: transparent;
 
       border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       font-size: 19px;
 
       cursor: pointer;
 
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
       transition: .15s;
     }
 
-
-    .header-btn:hover {
-
-      background: #f0f2f4;
+    .head-btn:hover {
+      background: #f0f3f5;
     }
 
-
-    /* ==============================
-       ROOM INFO
-    ============================== */
-
-    .room-info {
-
-      position: absolute;
-
-      top: 72px;
-      left: 50%;
-
-      transform:
-        translateX(-50%)
-        translateY(-10px);
-
-      background: white;
-
-      border-radius: 12px;
-
-      padding: 14px;
-
-      width: min(340px, 90%);
-
-      box-shadow:
-        0 8px 30px rgba(0,0,0,.2);
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transition: .2s;
-
-      z-index: 100;
+    .head-btn:active {
+      transform: scale(.9);
     }
 
-
-    .room-info.show {
-
-      opacity: 1;
-
-      pointer-events: auto;
-
-      transform:
-        translateX(-50%)
-        translateY(0);
-    }
-
-
-    .room-info-title {
-
-      font-weight: 700;
-
-      margin-bottom: 10px;
-    }
-
-
-    .room-link {
-
-      background: #f2f4f6;
-
-      border-radius: 8px;
-
-      padding: 10px;
-
-      font-size: 12px;
-
-      direction: ltr;
-
-      word-break: break-all;
-
-      margin-bottom: 10px;
-    }
-
-
-    .copy-room {
-
-      width: 100%;
-
-      border: none;
-
-      background: var(--telegram-blue);
-
-      color: white;
-
-      padding: 10px;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      font-size: 14px;
-    }
-
-
-    /* ==============================
+    /* =========================
        MESSAGES
-    ============================== */
+    ========================= */
 
     .messages {
-
       flex: 1;
-
       min-height: 0;
 
       overflow-y: auto;
+      overflow-x: hidden;
 
-      padding:
-        18px 15px 14px;
+      padding: 18px 14px;
 
       display: flex;
-
       flex-direction: column;
 
-      background-color: var(--chat-bg);
+      background-color: #dce7ee;
 
       background-image:
         radial-gradient(
-          rgba(90,110,120,.12) 1px,
+          rgba(85,110,125,.12) 1px,
           transparent 1px
         );
 
-      background-size: 24px 24px;
+      background-size: 25px 25px;
 
       scroll-behavior: smooth;
+
+      -webkit-overflow-scrolling: touch;
     }
 
+    .messages::-webkit-scrollbar {
+      width: 6px;
+    }
 
-    /* ==============================
-       Welcome
-    ============================== */
+    .messages::-webkit-scrollbar-thumb {
+      background: rgba(80,100,110,.25);
+      border-radius: 20px;
+    }
+
+    /* =========================
+       TELEGRAM CARTOON CENTER
+    ========================= */
 
     .welcome {
-
-      width: min(430px, 90%);
-
       margin: auto;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
 
       text-align: center;
 
-      background:
-        rgba(255,255,255,.85);
+      pointer-events: none;
 
-      padding: 18px;
-
-      border-radius: 14px;
-
-      box-shadow:
-        0 2px 8px rgba(0,0,0,.08);
-
-      color: #687782;
+      opacity: .92;
     }
 
+    .welcome-art {
+      width: 145px;
+      height: 145px;
 
-    .welcome-icon {
+      border-radius: 42px;
 
-      width: 58px;
-      height: 58px;
+      background:
+        linear-gradient(
+          145deg,
+          #55c8f1,
+          #229ed9
+        );
 
-      margin: 0 auto 10px;
-
-      border-radius: 50%;
-
-      background: var(--telegram-blue);
-
-      color: white;
+      box-shadow:
+        0 14px 35px
+        rgba(34,158,217,.25);
 
       display: flex;
-
       align-items: center;
       justify-content: center;
 
-      font-size: 27px;
+      position: relative;
+
+      transform: rotate(-2deg);
     }
 
+    .welcome-art::before {
+      content: "";
+
+      width: 76px;
+      height: 58px;
+
+      position: absolute;
+
+      background: #fff;
+
+      border-radius:
+        20px
+        20px
+        20px
+        7px;
+
+      transform: rotate(-12deg);
+    }
+
+    .welcome-art::after {
+      content: "➤";
+
+      position: absolute;
+
+      color: #229ed9;
+
+      font-size: 38px;
+
+      transform:
+        rotate(-12deg)
+        translate(-2px, -1px);
+    }
 
     .welcome-title {
+      margin-top: 15px;
 
-      color: var(--text);
-
+      font-size: 18px;
       font-weight: 700;
 
-      margin-bottom: 5px;
+      color: #526873;
     }
-
 
     .welcome-text {
+      margin-top: 5px;
 
-      font-size: 13px;
+      font-size: 12px;
 
-      line-height: 1.5;
+      color: #7b8b94;
     }
 
-
-    /* ==============================
-       MESSAGE
-    ============================== */
+    /* =========================
+       MESSAGES
+    ========================= */
 
     .message {
-
-      max-width: min(650px, 78%);
-
       display: flex;
-
       flex-direction: column;
+
+      max-width: 78%;
 
       margin-bottom: 7px;
 
       animation:
-        messageIn .15s ease-out;
+        messageAppear .16s ease-out;
     }
 
-
-    @keyframes messageIn {
-
+    @keyframes messageAppear {
       from {
-
         opacity: 0;
-
-        transform:
-          translateY(6px);
+        transform: translateY(5px);
       }
 
       to {
-
         opacity: 1;
-
-        transform:
-          translateY(0);
+        transform: translateY(0);
       }
     }
 
-
     .message--mine {
-
+      align-items: flex-end;
       align-self: flex-start;
-
-      align-items: flex-start;
     }
-
 
     .message--theirs {
-
+      align-items: flex-start;
       align-self: flex-end;
-
-      align-items: flex-end;
     }
 
-
-    .message-name {
+    .message__name {
+      padding:
+        1px 8px 3px;
 
       font-size: 11px;
-
       font-weight: 600;
 
-      color: #687782;
-
-      margin:
-        0 8px 3px;
+      color: #6e7f89;
     }
 
-
-    .message-bubble {
-
-      position: relative;
-
+    .message__bubble {
       padding:
-        8px 11px 7px;
+        9px 13px;
 
-      border-radius: 10px;
+      border-radius: 12px;
 
-      box-shadow:
-        0 1px 2px rgba(0,0,0,.12);
+      font-size: 15px;
+
+      line-height: 1.5;
 
       word-break: break-word;
-
-      line-height: 1.45;
-
-      font-size: 14.5px;
-    }
-
-
-    .message--mine
-    .message-bubble {
-
-      background: var(--mine);
-
-      border-top-left-radius: 3px;
-    }
-
-
-    .message--theirs
-    .message-bubble {
-
-      background: var(--theirs);
-
-      border-top-right-radius: 3px;
-    }
-
-
-    .message-meta {
-
-      display: flex;
-
-      justify-content: flex-end;
-
-      align-items: center;
-
-      gap: 4px;
-
-      font-size: 10px;
-
-      color: #78909c;
-
-      margin-top: 3px;
-    }
-
-
-    .message-check {
-
-      color: #229ed9;
-
-      font-size: 13px;
-    }
-
-
-    /* ==============================
-       SYSTEM MESSAGE
-    ============================== */
-
-    .system-message {
-
-      align-self: center;
-
-      margin:
-        8px auto;
-
-      padding:
-        6px 12px;
-
-      background:
-        rgba(255,255,255,.82);
-
-      color: #65747e;
-
-      border-radius: 10px;
-
-      font-size: 11px;
+      overflow-wrap: anywhere;
 
       box-shadow:
-        0 1px 3px rgba(0,0,0,.08);
+        0 1px 2px rgba(0,0,0,.11);
+
+      color: #17212b;
+
+      background: #ffffff;
     }
 
-
-    /* ==============================
-       TYPING
-    ============================== */
-
-    .typing {
-
-      min-height: 20px;
-
-      padding:
-        0 18px;
-
-      color: var(--telegram-blue);
-
-      font-size: 11px;
-
-      background: var(--chat-bg);
+    .message--theirs .message__bubble {
+      border-top-right-radius: 3px;
+      background: #ffffff;
     }
 
-
-    .typing.hidden {
-
-      visibility: hidden;
+    .message--mine .message__bubble {
+      border-top-left-radius: 3px;
+      background: #effdde;
     }
 
-
-    /* ==============================
+    /* =========================
        FOOTER
-    ============================== */
+    ========================= */
 
     .footer {
-
-      min-height: 62px;
-
-      padding:
-        7px 9px;
+      min-height: 66px;
 
       display: flex;
-
       align-items: center;
 
       gap: 6px;
 
-      background: var(--footer);
+      padding:
+        7px 9px;
+
+      background: #ffffff;
 
       border-top:
-        1px solid var(--border);
+        1px solid #e3e7ea;
 
-      z-index: 10;
+      position: relative;
+
+      z-index: 30;
     }
 
+    /* =========================
+       EMOJI
+    ========================= */
 
-    /* ==============================
-       Emoji
-    ============================== */
+    .emoji-button {
+      width: 44px;
+      height: 44px;
 
-    .emoji-btn {
+      min-width: 44px;
 
-      width: 42px;
-      height: 42px;
-
-      border: none;
-
-      border-radius: 50%;
+      border: 0;
 
       background: transparent;
 
-      font-size: 22px;
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 23px;
 
       cursor: pointer;
 
-      flex-shrink: 0;
+      user-select: none;
+
+      transition: .15s;
     }
 
-
-    .emoji-btn:hover {
-
-      background: #f0f2f4;
+    .emoji-button:hover {
+      background: #f0f3f5;
     }
 
+    .emoji-button:active {
+      transform: scale(.9);
+    }
 
-    /* ==============================
-       Input
-    ============================== */
+    /* =========================
+       INPUT
+    ========================= */
 
     .input-wrap {
-
       flex: 1;
 
       min-width: 0;
 
-      display: flex;
+      height: 44px;
 
+      display: flex;
       align-items: center;
+
+      padding:
+        0 15px;
 
       background: #f1f3f5;
 
-      border-radius: 21px;
-
-      padding:
-        0 14px;
+      border-radius: 23px;
     }
 
-
-    input {
-
+    input[type="text"] {
       width: 100%;
+      height: 44px;
 
-      height: 42px;
-
-      border: none;
-
-      outline: none;
+      border: 0;
+      outline: 0;
 
       background: transparent;
 
@@ -742,303 +485,448 @@
 
       font-size: 15px;
 
-      color: var(--text);
+      color: #17212b;
     }
 
-
-    input::placeholder {
-
-      color: #8b98a1;
+    input[type="text"]::placeholder {
+      color: #87959e;
     }
 
+    .input-wrap:focus-within {
+      box-shadow:
+        inset 0 0 0 1px
+        rgba(34,158,217,.2);
+    }
 
-    /* ==============================
-       Send
-    ============================== */
+    /* =========================
+       SEND
+    ========================= */
 
     .send-btn {
+      width: 46px;
+      height: 46px;
 
-      width: 45px;
-      height: 45px;
+      min-width: 46px;
 
-      flex-shrink: 0;
-
-      border: none;
+      border: 0;
 
       border-radius: 50%;
 
       background:
-        var(--telegram-blue);
+        linear-gradient(
+          135deg,
+          #2aabee,
+          #168ac1
+        );
 
       color: white;
 
-      font-size: 18px;
-
-      cursor: pointer;
+      font-size: 19px;
 
       display: flex;
-
       align-items: center;
       justify-content: center;
 
-      transition: .15s;
-    }
+      cursor: pointer;
 
+      box-shadow:
+        0 3px 9px
+        rgba(34,158,217,.28);
+
+      transition: .12s;
+    }
 
     .send-btn:hover {
-
-      background:
-        var(--telegram-blue-dark);
+      box-shadow:
+        0 5px 13px
+        rgba(34,158,217,.38);
     }
-
 
     .send-btn:active {
-
-      transform:
-        scale(.91);
+      transform: scale(.91);
     }
 
+    /* =========================
+       EMOJI PANEL
+    ========================= */
 
-    /* ==============================
-       Emoji Picker
-    ============================== */
-
-    .emoji-picker {
-
+    .emoji-panel {
       position: absolute;
 
-      bottom: 70px;
+      bottom: 72px;
+      right: 8px;
 
-      right: 10px;
+      width: 300px;
 
-      width: 280px;
+      max-width:
+        calc(100vw - 16px);
 
-      max-height: 220px;
+      max-height: 260px;
 
       overflow-y: auto;
 
-      background: white;
-
-      border-radius: 12px;
-
       padding: 10px;
 
+      background: #ffffff;
+
+      border-radius: 14px;
+
       box-shadow:
-        0 5px 25px rgba(0,0,0,.2);
+        0 8px 30px
+        rgba(0,0,0,.20);
 
       display: none;
 
       grid-template-columns:
-        repeat(8, 1fr);
+        repeat(8,1fr);
 
-      gap: 4px;
+      gap: 3px;
 
       z-index: 100;
     }
 
-
-    .emoji-picker.show {
-
+    .emoji-panel.show {
       display: grid;
     }
 
-
-    .emoji-item {
-
-      border: none;
+    .emoji-choice {
+      border: 0;
 
       background: transparent;
 
-      font-size: 21px;
+      border-radius: 8px;
 
       padding: 5px;
 
-      border-radius: 6px;
+      font-size: 22px;
 
       cursor: pointer;
     }
 
-
-    .emoji-item:hover {
-
-      background: #eef1f3;
+    .emoji-choice:hover {
+      background: #eef2f4;
     }
 
+    /* =========================
+       SHARE MODAL
+    ========================= */
 
-    /* ==============================
-       Mobile
-    ============================== */
+    .modal {
+      position: absolute;
+
+      inset: 0;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background:
+        rgba(0,0,0,.42);
+
+      z-index: 200;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(420px,100%);
+
+      padding: 21px;
+
+      border-radius: 18px;
+
+      background: #ffffff;
+
+      box-shadow:
+        0 15px 50px
+        rgba(0,0,0,.28);
+
+      animation:
+        modalIn .18s ease-out;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+
+      margin-bottom: 8px;
+    }
+
+    .modal-description {
+      font-size: 13px;
+
+      line-height: 1.6;
+
+      color: #71808a;
+
+      margin-bottom: 12px;
+    }
+
+    .share-url {
+      padding: 11px;
+
+      background: #f1f3f5;
+
+      border-radius: 10px;
+
+      direction: ltr;
+
+      text-align: left;
+
+      word-break: break-all;
+
+      font-size: 12px;
+    }
+
+    .modal-actions {
+      display: flex;
+
+      gap: 8px;
+
+      margin-top: 15px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+
+      padding: 11px;
+
+      border-radius: 10px;
+
+      cursor: pointer;
+    }
+
+    .copy-btn {
+      background: #229ed9;
+      color: white;
+    }
+
+    .close-btn {
+      background: #e9eef1;
+      color: #17212b;
+    }
+
+    /* =========================
+       DARK MODE
+    ========================= */
+
+    .dark-mode {
+      background: #0e171e;
+      color: #edf4f7;
+    }
+
+    .dark-mode .chat-header,
+    .dark-mode .footer {
+      background: #17212b;
+      border-color: rgba(255,255,255,.07);
+    }
+
+    .dark-mode .title {
+      color: #edf4f7;
+    }
+
+    .dark-mode .status {
+      color: #91a2ac;
+    }
+
+    .dark-mode .head-btn,
+    .dark-mode .emoji-button {
+      color: #edf4f7;
+    }
+
+    .dark-mode .head-btn:hover,
+    .dark-mode .emoji-button:hover {
+      background: rgba(255,255,255,.08);
+    }
+
+    .dark-mode .messages {
+      background-color: #101a21;
+
+      background-image:
+        radial-gradient(
+          rgba(180,210,220,.06) 1px,
+          transparent 1px
+        );
+    }
+
+    .dark-mode .message__name {
+      color: #91a3ad;
+    }
+
+    .dark-mode .message--theirs .message__bubble {
+      background: #26343d;
+      color: #edf4f7;
+    }
+
+    .dark-mode .message--mine .message__bubble {
+      background: #28543d;
+      color: #edf4f7;
+    }
+
+    .dark-mode .input-wrap {
+      background: #26343d;
+    }
+
+    .dark-mode input[type="text"] {
+      color: #edf4f7;
+    }
+
+    .dark-mode .emoji-panel,
+    .dark-mode .modal-box {
+      background: #202b33;
+      color: #edf4f7;
+    }
+
+    .dark-mode .emoji-choice:hover {
+      background: rgba(255,255,255,.08);
+    }
+
+    .dark-mode .share-url {
+      background: #26343d;
+    }
+
+    .dark-mode .close-btn {
+      background: #2d3a43;
+      color: #fff;
+    }
+
+    .dark-mode .welcome-title {
+      color: #a8bbc5;
+    }
+
+    .dark-mode .welcome-text {
+      color: #82949e;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
 
     @media (max-width: 600px) {
 
-      .header {
-
+      .chat-header {
         height: 60px;
         min-height: 60px;
+        padding: 6px 7px;
       }
 
-
-      .header-avatar {
-
+      .avatar {
         width: 42px;
         height: 42px;
+        min-width: 42px;
       }
 
-
-      .header-actions {
-
-        gap: 0;
+      .head-btn {
+        width: 39px;
+        height: 39px;
       }
-
 
       .messages {
-
         padding:
-          10px 8px;
+          10px 7px;
       }
-
 
       .message {
-
-        max-width: 85%;
+        max-width: 87%;
       }
 
+      .message__bubble {
+        font-size: 14px;
+      }
 
       .footer {
-
-        padding:
-          6px;
+        min-height: 61px;
+        padding: 6px;
       }
 
+      .emoji-button {
+        width: 41px;
+        height: 41px;
+        min-width: 41px;
+      }
 
-      .emoji-picker {
+      .send-btn {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+      }
 
-        bottom: 64px;
+      .welcome-art {
+        width: 110px;
+        height: 110px;
+        border-radius: 32px;
+      }
 
-        right: 6px;
+      .welcome-art::before {
+        width: 60px;
+        height: 46px;
+      }
 
-        width: 280px;
+      .welcome-art::after {
+        font-size: 30px;
       }
     }
-
-
-    /* ==============================
-       Dark mode
-    ============================== */
-
-    body.dark {
-
-      --bg: #17212b;
-
-      --chat-bg: #0e1621;
-
-      --header: #17212b;
-
-      --footer: #17212b;
-
-      --mine: #2b5278;
-
-      --theirs: #182533;
-
-      --text: #eeeeee;
-
-      --muted: #9aa8b3;
-
-      --border: #263542;
-    }
-
-
-    body.dark
-    .input-wrap {
-
-      background: #202b36;
-    }
-
-
-    body.dark
-    .emoji-picker {
-
-      background: #17212b;
-    }
-
-
-    body.dark
-    .room-info {
-
-      background: #17212b;
-    }
-
-
-    body.dark
-    .room-link {
-
-      background: #202b36;
-    }
-
   </style>
-
 </head>
-
 
 <body>
 
-<div class="app">
+  <div class="content">
 
-  <main class="chat">
+    <!-- HEADER -->
+    <header class="chat-header">
 
-
-    <!-- ==========================
-         HEADER
-    =========================== -->
-
-    <header class="header">
-
-      <div class="header-avatar">
+      <div class="avatar">
         💬
       </div>
 
+      <div class="head-info">
 
-      <div class="header-info">
-
-        <div class="header-title">
+        <div class="title">
           محادثة خاصة
         </div>
 
-     <div class="messages"></div>
+        <div class="status">
+          محادثة مباشرة
+        </div>
 
-<form class="footer">
-    <input type="text">
-    <button type="submit">Send</button>
-</form>
+      </div>
 
-<template data-template="message">
-    <div class="message">
-        <div class="message__name"></div>
-        <div class="message__bubble"></div>
-    </div>
-</template>
+      <div class="head-actions">
 
-      <div class="header-actions">
-
+        <!-- مشاركة -->
         <button
-          class="header-btn"
-          id="roomBtn"
-          title="معلومات الغرفة">
+          type="button"
+          class="head-btn"
+          id="shareButton"
+          title="مشاركة المحادثة">
           🔗
         </button>
 
+        <!-- الوضع الليلي -->
         <button
-          class="header-btn"
-          id="themeBtn"
+          type="button"
+          class="head-btn"
+          id="themeButton"
           title="الوضع الليلي">
           🌙
-        </button>
-
-        <button
-          class="header-btn"
-          id="moreBtn"
-          title="المزيد">
-          ⋮
         </button>
 
       </div>
@@ -1046,472 +934,492 @@
     </header>
 
 
-    <!-- ==========================
-         ROOM POPUP
-    =========================== -->
+    <!-- MESSAGES -->
+    <div class="messages">
 
-    <div
-      class="room-info"
-      id="roomInfo">
+      <!-- الزينة الموجودة في وسط الشاشة -->
+      <div class="welcome" id="welcome">
 
-      <div class="room-info-title">
-        🔐 غرفة المحادثة
-      </div>
-
-      <div
-        class="room-link"
-        id="roomLink">
-      </div>
-
-      <button
-        class="copy-room"
-        id="copyRoom">
-        📋 نسخ رابط الغرفة
-      </button>
-
-    </div>
-
-
-    <!-- ==========================
-         MESSAGES
-    =========================== -->
-
-    <section
-      class="messages"
-      id="messages">
-
-      <div
-        class="welcome"
-        id="welcome">
-
-        <div class="welcome-icon">
-          💬
-        </div>
+        <div class="welcome-art"></div>
 
         <div class="welcome-title">
-          محادثة خاصة
+          ابدأ محادثتك
         </div>
 
         <div class="welcome-text">
-          شارك رابط هذه الغرفة مع شخص آخر
-          لبدء محادثة مباشرة وآمنة.
+          محادثة خاصة وآمنة
         </div>
 
       </div>
 
-    </section>
-
-
-    <!-- ==========================
-         TYPING
-    =========================== -->
-
-    <div
-      class="typing hidden"
-      id="typing">
-      يكتب الآن...
     </div>
 
 
-    <!-- ==========================
-         FOOTER
-    =========================== -->
-
+    <!-- FOOTER -->
     <form
       class="footer"
-      id="chatForm">
+      onsubmit="return false;">
+
+      <!-- Emoji -->
+      <button
+        type="button"
+        class="emoji-button"
+        id="emojiButton"
+        title="الإيموجي">
+        😊
+      </button>
 
 
-        <button
-          type="button"
-          class="emoji-button"
-          id="emojiButton"
-          aria-label="Emoji">
+      <!-- Input -->
+      <div class="input-wrap">
 
-          😊
+        <input
+          type="text"
+          placeholder="اكتب رسالة..."
+          autocomplete="off">
 
-        </button>
-
-
-        <!-- input -->
-
-        <div class="footer__input-wrap">
-
-          <input
-            type="text"
-            autocomplete="off"
-            placeholder="اكتب رسالة..."
-          >
-
-        </div>
+      </div>
 
 
-        <!-- send -->
+      <!-- Send -->
+      <button
+        type="submit"
+        class="send-btn"
+        title="إرسال">
+        ➤
+      </button>
 
-        <button
-          type="submit"
-          class="send-btn"
-          title="إرسال">
 
-          ➤
+      <!-- Emoji Panel -->
+      <div
+        class="emoji-panel"
+        id="emojiPanel">
 
-        </button>
+        <button type="button" class="emoji-choice">😀</button>
+        <button type="button" class="emoji-choice">😃</button>
+        <button type="button" class="emoji-choice">😄</button>
+        <button type="button" class="emoji-choice">😁</button>
 
+        <button type="button" class="emoji-choice">😂</button>
+        <button type="button" class="emoji-choice">🤣</button>
+        <button type="button" class="emoji-choice">😊</button>
+        <button type="button" class="emoji-choice">😍</button>
+
+        <button type="button" class="emoji-choice">🥰</button>
+        <button type="button" class="emoji-choice">😘</button>
+        <button type="button" class="emoji-choice">😎</button>
+        <button type="button" class="emoji-choice">🤩</button>
+
+        <button type="button" class="emoji-choice">🥳</button>
+        <button type="button" class="emoji-choice">😇</button>
+        <button type="button" class="emoji-choice">🤔</button>
+        <button type="button" class="emoji-choice">😴</button>
+
+        <button type="button" class="emoji-choice">😭</button>
+        <button type="button" class="emoji-choice">😢</button>
+        <button type="button" class="emoji-choice">😡</button>
+        <button type="button" class="emoji-choice">😱</button>
+
+        <button type="button" class="emoji-choice">❤️</button>
+        <button type="button" class="emoji-choice">🧡</button>
+        <button type="button" class="emoji-choice">💛</button>
+        <button type="button" class="emoji-choice">💚</button>
+
+        <button type="button" class="emoji-choice">💙</button>
+        <button type="button" class="emoji-choice">💜</button>
+        <button type="button" class="emoji-choice">🖤</button>
+        <button type="button" class="emoji-choice">🤍</button>
+
+        <button type="button" class="emoji-choice">👍</button>
+        <button type="button" class="emoji-choice">👏</button>
+        <button type="button" class="emoji-choice">🙏</button>
+        <button type="button" class="emoji-choice">🔥</button>
+
+        <button type="button" class="emoji-choice">💯</button>
+        <button type="button" class="emoji-choice">✨</button>
+        <button type="button" class="emoji-choice">🎉</button>
+        <button type="button" class="emoji-choice">🙈</button>
+
+      </div>
 
     </form>
 
 
-    <!-- ==========================
-         EMOJI PICKER
-    =========================== -->
-
+    <!-- SHARE MODAL -->
     <div
-      class="emoji-picker"
-      id="emojiPicker">
+      class="modal"
+      id="shareModal">
 
-      <button class="emoji-item">😀</button>
-      <button class="emoji-item">😂</button>
-      <button class="emoji-item">🤣</button>
-      <button class="emoji-item">😊</button>
-      <button class="emoji-item">😍</button>
-      <button class="emoji-item">🥰</button>
-      <button class="emoji-item">😘</button>
-      <button class="emoji-item">😎</button>
+      <div class="modal-box">
 
-      <button class="emoji-item">❤️</button>
-      <button class="emoji-item">🧡</button>
-      <button class="emoji-item">💛</button>
-      <button class="emoji-item">💚</button>
-      <button class="emoji-item">💙</button>
-      <button class="emoji-item">💜</button>
-      <button class="emoji-item">🖤</button>
-      <button class="emoji-item">🤍</button>
+        <div class="modal-title">
+          🔗 مشاركة المحادثة
+        </div>
 
-      <button class="emoji-item">👍</button>
-      <button class="emoji-item">👎</button>
-      <button class="emoji-item">👏</button>
-      <button class="emoji-item">🙏</button>
-      <button class="emoji-item">🔥</button>
-      <button class="emoji-item">🎉</button>
-      <button class="emoji-item">💯</button>
-      <button class="emoji-item">✨</button>
+        <div class="modal-description">
+          أرسل هذا الرابط للشخص الذي تريد التحدث معه.
+          عند فتحه سيدخل إلى نفس غرفة المحادثة.
+        </div>
 
-      <button class="emoji-item">😂</button>
-      <button class="emoji-item">😭</button>
-      <button class="emoji-item">😡</button>
-      <button class="emoji-item">🤔</button>
-      <button class="emoji-item">😴</button>
-      <button class="emoji-item">🤩</button>
-      <button class="emoji-item">😇</button>
-      <button class="emoji-item">🥳</button>
+        <div
+          class="share-url"
+          id="shareUrl">
+        </div>
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="copy-btn"
+            id="copyShare">
+            نسخ الرابط
+          </button>
+
+          <button
+            type="button"
+            class="close-btn"
+            id="closeShare">
+            إغلاق
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 
-  </main>
-
-</div>
+  </div>
 
 
-<!--
-=================================================
-مهم:
-نظام الغرفة لا يزال موجودًا في script.js
-=================================================
--->
+  <!-- TEMPLATE المطلوب من script.js -->
+  <template data-template="message">
 
-<script src="script.js"></script>
+    <div class="message">
 
+      <div class="message__name"></div>
 
-<script>
+      <div class="message__bubble"></div>
 
-  /* =========================================
-     وظائف الواجهة
-  ========================================= */
+    </div>
+
+  </template>
 
 
-  const messageInput =
-    document.getElementById('messageInput');
+  <!-- السكربت الأصلي بدون أي تعديل -->
+  <script src="script.js"></script>
 
 
-  const messages =
-    document.getElementById('messages');
+  <!-- وظائف الواجهة فقط -->
+  <script>
 
+    const emojiButton =
+      document.getElementById('emojiButton');
 
-  const emojiBtn =
-    document.getElementById('emojiBtn');
+    const emojiPanel =
+      document.getElementById('emojiPanel');
 
-
-  const emojiPicker =
-    document.getElementById('emojiPicker');
-
-
-  const roomBtn =
-    document.getElementById('roomBtn');
-
-
-  const roomInfo =
-    document.getElementById('roomInfo');
-
-
-  const copyRoom =
-    document.getElementById('copyRoom');
-
-
-  const roomLink =
-    document.getElementById('roomLink');
-
-
-  const themeBtn =
-    document.getElementById('themeBtn');
-
-
-  const welcome =
-    document.getElementById('welcome');
-
-
-  /* =========================================
-     رابط الغرفة
-  ========================================= */
-
-  roomLink.innerText =
-    location.href;
-
-
-  roomBtn.addEventListener(
-    'click',
-    event => {
-
-      event.stopPropagation();
-
-      roomInfo.classList.toggle(
-        'show'
+    const input =
+      document.querySelector(
+        'input[type="text"]'
       );
 
-    }
-  );
+    const themeButton =
+      document.getElementById('themeButton');
+
+    const shareButton =
+      document.getElementById('shareButton');
+
+    const shareModal =
+      document.getElementById('shareModal');
+
+    const shareUrl =
+      document.getElementById('shareUrl');
+
+    const copyShare =
+      document.getElementById('copyShare');
+
+    const closeShare =
+      document.getElementById('closeShare');
+
+    const messages =
+      document.querySelector('.messages');
+
+    const welcome =
+      document.getElementById('welcome');
 
 
-  copyRoom.addEventListener(
-    'click',
-    async () => {
+    /* =================================
+       EMOJI
+    ================================= */
 
-      try {
+    let pressTimer = null;
+    let longPress = false;
 
-        await navigator.clipboard.writeText(
-          location.href
-        );
+    emojiButton.addEventListener(
+      'pointerdown',
+      () => {
 
-        copyRoom.innerText =
-          '✅ تم نسخ الرابط';
+        longPress = false;
 
-        setTimeout(() => {
+        pressTimer =
+          setTimeout(() => {
 
-          copyRoom.innerText =
-            '📋 نسخ رابط الغرفة';
+            longPress = true;
 
-        }, 1500);
+            emojiPanel.classList.add(
+              'show'
+            );
+
+          }, 500);
 
       }
+    );
 
-      catch {
 
-        alert(
-          'انسخ الرابط من أعلى المتصفح'
-        );
+    emojiButton.addEventListener(
+      'pointerup',
+      () => {
+
+        clearTimeout(pressTimer);
+
+        if (!longPress) {
+
+          input.value += '😊';
+
+          input.focus();
+
+        }
 
       }
+    );
+
+
+    emojiButton.addEventListener(
+      'pointercancel',
+      () => {
+
+        clearTimeout(pressTimer);
+
+      }
+    );
+
+
+    emojiButton.addEventListener(
+      'pointerleave',
+      () => {
+
+        clearTimeout(pressTimer);
+
+      }
+    );
+
+
+    document
+      .querySelectorAll('.emoji-choice')
+      .forEach(button => {
+
+        button.addEventListener(
+          'click',
+          () => {
+
+            input.value +=
+              button.textContent;
+
+            input.focus();
+
+            emojiPanel.classList.remove(
+              'show'
+            );
+
+          }
+        );
+
+      });
+
+
+    /* =================================
+       DARK / LIGHT
+    ================================= */
+
+    const savedTheme =
+      localStorage.getItem(
+        'chat-theme'
+      );
+
+    if (savedTheme === 'dark') {
+
+      document.body.classList.add(
+        'dark-mode'
+      );
+
+      themeButton.textContent =
+        '☀️';
 
     }
-  );
 
 
-  /* =========================================
-     إغلاق popup
-  ========================================= */
+    themeButton.addEventListener(
+      'click',
+      () => {
 
-  document.addEventListener(
-    'click',
-    event => {
+        const dark =
+          document.body.classList.toggle(
+            'dark-mode'
+          );
 
-      if (
-        !roomInfo.contains(event.target) &&
-        event.target !== roomBtn
-      ) {
+        localStorage.setItem(
+          'chat-theme',
+          dark ? 'dark' : 'light'
+        );
 
-        roomInfo.classList.remove(
+        themeButton.textContent =
+          dark ? '☀️' : '🌙';
+
+      }
+    );
+
+
+    /* =================================
+       SHARE
+    ================================= */
+
+    shareButton.addEventListener(
+      'click',
+      () => {
+
+        shareUrl.textContent =
+          window.location.href;
+
+        shareModal.classList.add(
           'show'
         );
 
       }
+    );
 
-      if (
-        !emojiPicker.contains(event.target) &&
-        event.target !== emojiBtn
-      ) {
 
-        emojiPicker.classList.remove(
+    closeShare.addEventListener(
+      'click',
+      () => {
+
+        shareModal.classList.remove(
           'show'
         );
 
       }
-
-    }
-  );
+    );
 
 
-  /* =========================================
-     Emoji
-  ========================================= */
+    shareModal.addEventListener(
+      'click',
+      event => {
 
-  emojiBtn.addEventListener(
-    'click',
-    event => {
+        if (
+          event.target ===
+          shareModal
+        ) {
 
-      event.stopPropagation();
-
-      emojiPicker.classList.toggle(
-        'show'
-      );
-
-    }
-  );
-
-
-  document
-    .querySelectorAll('.emoji-item')
-    .forEach(button => {
-
-      button.addEventListener(
-        'click',
-        () => {
-
-          messageInput.value +=
-            button.innerText;
-
-          messageInput.focus();
-
-          emojiPicker.classList.remove(
+          shareModal.classList.remove(
             'show'
           );
 
         }
-      );
-
-    });
-
-
-  /* =========================================
-     Dark mode
-  ========================================= */
-
-  const savedTheme =
-    localStorage.getItem(
-      'chat_theme'
-    );
-
-
-  if (savedTheme === 'dark') {
-
-    document.body.classList.add(
-      'dark'
-    );
-
-    themeBtn.innerText = '☀️';
-  }
-
-
-  themeBtn.addEventListener(
-    'click',
-    () => {
-
-      document.body.classList.toggle(
-        'dark'
-      );
-
-
-      const dark =
-        document.body.classList.contains(
-          'dark'
-        );
-
-
-      localStorage.setItem(
-        'chat_theme',
-        dark ? 'dark' : 'light'
-      );
-
-
-      themeBtn.innerText =
-        dark ? '☀️' : '🌙';
-
-    }
-  );
-
-
-  /* =========================================
-     إخفاء رسالة الترحيب عند أول رسالة
-  ========================================= */
-
-  window.hideWelcome =
-    function() {
-
-      if (welcome) {
-
-        welcome.style.display =
-          'none';
-
-      }
-
-    };
-
-
-  /* =========================================
-     Scroll
-  ========================================= */
-
-  window.scrollChatToBottom =
-    function() {
-
-      messages.scrollTop =
-        messages.scrollHeight;
-
-    };
-
-
-  /* =========================================
-     الكيبورد
-  ========================================= */
-
-  messageInput.addEventListener(
-    'focus',
-    () => {
-
-      setTimeout(
-        scrollChatToBottom,
-        150
-      );
-
-    }
-  );
-
-
-  if (window.visualViewport) {
-
-    window.visualViewport.addEventListener(
-      'resize',
-      () => {
-
-        setTimeout(
-          scrollChatToBottom,
-          100
-        );
 
       }
     );
 
-  }
 
-</script>
+    copyShare.addEventListener(
+      'click',
+      async () => {
+
+        try {
+
+          await navigator.clipboard.writeText(
+            window.location.href
+          );
+
+          copyShare.textContent =
+            'تم النسخ ✓';
+
+          setTimeout(() => {
+
+            copyShare.textContent =
+              'نسخ الرابط';
+
+          }, 1500);
+
+        } catch {
+
+          window.prompt(
+            'انسخ الرابط:',
+            window.location.href
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =================================
+       إغلاق Emoji عند الضغط خارجه
+    ================================= */
+
+    document.addEventListener(
+      'pointerdown',
+      event => {
+
+        if (
+          !emojiPanel.contains(
+            event.target
+          ) &&
+          event.target !== emojiButton
+        ) {
+
+          emojiPanel.classList.remove(
+            'show'
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =================================
+       إخفاء الزينة عند ظهور رسالة
+    ================================= */
+
+    const observer =
+      new MutationObserver(() => {
+
+        const messageCount =
+          messages.querySelectorAll(
+            '.message'
+          ).length;
+
+        if (
+          messageCount > 0 &&
+          welcome &&
+          welcome.parentNode
+        ) {
+
+          welcome.remove();
+
+        }
+
+      });
+
+
+    observer.observe(
+      messages,
+      {
+        childList: true
+      }
+    );
+
+  </script>
 
 </body>
 </html>
